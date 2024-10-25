@@ -1,0 +1,227 @@
+-- 1. Database Commands
+
+-- Create a new database
+CREATE DATABASE database_name;
+
+-- Select a database to use
+USE database_name;
+
+-- Show all databases
+SHOW DATABASES;
+
+-- Drop a database
+DROP DATABASE database_name;
+
+
+-- 2. Table Commands
+
+-- Create a new table
+CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+    PRIMARY KEY (column1)
+);
+
+-- Show all tables in the selected database
+SHOW TABLES;
+
+-- Describe the structure of a table (schema)
+DESCRIBE table_name;
+
+-- Drop a table
+DROP TABLE table_name;
+
+-- Rename a table
+RENAME TABLE old_table_name TO new_table_name;
+
+-- Alter table: Add a column
+ALTER TABLE table_name ADD column_name datatype;
+
+-- Alter table: Drop a column
+ALTER TABLE table_name DROP COLUMN column_name;
+
+-- Alter table: Modify a column datatype
+ALTER TABLE table_name MODIFY column_name new_datatype;
+
+
+-- 3. Data Manipulation Commands
+
+-- Insert data into a table
+INSERT INTO table_name (column1, column2, column3) 
+VALUES (value1, value2, value3);
+
+-- Select specific columns from a table
+SELECT column1, column2 FROM table_name;
+
+-- Select all columns from a table
+SELECT * FROM table_name;
+
+-- Update data in a table
+UPDATE table_name
+SET column1 = value1, column2 = value2
+WHERE condition;
+
+-- Delete data from a table
+DELETE FROM table_name WHERE condition;
+
+-- Truncate a table (delete all rows without removing the table itself)
+TRUNCATE TABLE table_name;
+
+
+-- 4. Query Filtering
+
+-- Select with a WHERE clause
+SELECT * FROM table_name
+WHERE column1 = value;
+
+-- Select with multiple conditions (AND)
+SELECT * FROM table_name
+WHERE column1 = value1 AND column2 = value2;
+
+-- Select with OR condition
+SELECT * FROM table_name
+WHERE column1 = value1 OR column2 = value2;
+
+-- Select with LIKE for pattern matching
+SELECT * FROM table_name
+WHERE column1 LIKE 'pattern%';
+
+-- Select with IN clause (to match any of the values in the list)
+SELECT * FROM table_name
+WHERE column1 IN (value1, value2, value3);
+
+-- Select with BETWEEN (range filtering)
+SELECT * FROM table_name
+WHERE column1 BETWEEN value1 AND value2;
+
+-- Order the result set
+SELECT * FROM table_name
+ORDER BY column1 ASC;  -- or DESC for descending
+
+
+-- 5. Aggregate Functions
+
+-- Count the number of rows
+SELECT COUNT(*) FROM table_name;
+
+-- Get the maximum value in a column
+SELECT MAX(column_name) FROM table_name;
+
+-- Get the minimum value in a column
+SELECT MIN(column_name) FROM table_name;
+
+-- Calculate the sum of a column
+SELECT SUM(column_name) FROM table_name;
+
+-- Calculate the average of a column
+SELECT AVG(column_name) FROM table_name;
+
+-- Group results and apply aggregate functions
+SELECT column1, COUNT(*)
+FROM table_name
+GROUP BY column1;
+
+-- Group results with filtering (HAVING)
+SELECT column1, COUNT(*)
+FROM table_name
+GROUP BY column1
+HAVING COUNT(*) > 1;
+
+
+-- 6. Table Join Commands
+
+-- Inner Join
+SELECT table1.column1, table2.column2
+FROM table1
+INNER JOIN table2
+ON table1.common_column = table2.common_column;
+
+-- Left Join
+SELECT table1.column1, table2.column2
+FROM table1
+LEFT JOIN table2
+ON table1.common_column = table2.common_column;
+
+-- Right Join
+SELECT table1.column1, table2.column2
+FROM table1
+RIGHT JOIN table2
+ON table1.common_column = table2.common_column;
+
+-- Cross Join (Cartesian product)
+SELECT table1.column1, table2.column2
+FROM table1
+CROSS JOIN table2;
+
+-- Full Outer Join (not directly supported in MySQL, use UNION)
+SELECT table1.column1, table2.column2
+FROM table1
+LEFT JOIN table2 ON table1.common_column = table2.common_column
+UNION
+SELECT table1.column1, table2.column2
+FROM table1
+RIGHT JOIN table2 ON table1.common_column = table2.common_column;
+
+
+-- 7. Indexes and Keys
+
+-- Create an index on a column
+CREATE INDEX index_name ON table_name (column_name);
+
+-- Drop an index
+DROP INDEX index_name ON table_name;
+
+-- Add a primary key
+ALTER TABLE table_name
+ADD PRIMARY KEY (column_name);
+
+-- Add a unique key
+ALTER TABLE table_name
+ADD UNIQUE (column_name);
+
+-- Add a foreign key
+ALTER TABLE table_name
+ADD CONSTRAINT fk_name
+FOREIGN KEY (column_name)
+REFERENCES other_table(column_name);
+
+
+-- 8. Transaction Control
+
+-- Start a transaction
+START TRANSACTION;
+
+-- Commit the current transaction
+COMMIT;
+
+-- Rollback the current transaction
+ROLLBACK;
+
+
+-- 9. User Management
+
+-- Create a new user
+CREATE USER 'username'@'hostname' IDENTIFIED BY 'password';
+
+-- Grant privileges to a user
+GRANT ALL PRIVILEGES ON database_name.* TO 'username'@'hostname';
+
+-- Show current privileges for a user
+SHOW GRANTS FOR 'username'@'hostname';
+
+-- Revoke privileges from a user
+REVOKE ALL PRIVILEGES ON database_name.* FROM 'username'@'hostname';
+
+-- Delete a user
+DROP USER 'username'@'hostname';
+
+
+-- 10. Backup and Restore
+
+-- Backup a database (run from command line)
+-- mysqldump -u username -p database_name > backup_file.sql
+
+-- Restore a database (run from command line)
+-- mysql -u username -p database_name < backup_file.sql;
+
